@@ -24,7 +24,7 @@ Output TV listings for several channels available in Portugal.
 
 First run B<tv_grab_pt_meo --configure> to choose, which channels you want
 to download. Then running B<tv_grab_pt_meo> with no arguments will output
-listings in XML format to standard output.
+listings in XML format to standard output
 
 Channel ids will be output in alphanumeric characters. Only basic Latin
 alphabet chars are allowed, so any utf-8 characters in the station callsign
