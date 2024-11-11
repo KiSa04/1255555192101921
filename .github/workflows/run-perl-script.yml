@@ -24,8 +24,8 @@ jobs:
         export PERL5LIB=$GITHUB_WORKSPACE/xmltv-0.5.69  # Set PERL5LIB environment variable
 
     - name: Run Makefile.PL and gmake install
-      working-directory: ${{ github.workspace }}/xmltv-0.5.69
       run: |
+        export PERL5LIB=$GITHUB_WORKSPACE/xmltv-0.5.69  # Set PERL5LIB environment variable
         perl Makefile.PL
         make install  # Use `make` instead of `gmake` on Ubuntu
     - name: Install Perl and Dependencies
