@@ -19,6 +19,18 @@ jobs:
     - name: Install Perl and Dependencies
       run: |
         sudo apt-get update
+        sudo apt-get install -y perl cpanminus make  # Install Perl, cpanminus, and make
+        cpanm XML::Writer  # Install XML::Writer Perl module
+        export PERL5LIB=$GITHUB_WORKSPACE/xmltv-0.5.69/lib  # Set PERL5LIB environment variable
+
+    - name: Run Makefile.PL and gmake install
+      working-directory: ${{ github.workspace }}/xmltv-0.5.69
+      run: |
+        perl Makefile.PL
+        make install  # Use `make` instead of `gmake` on Ubuntu
+    - name: Install Perl and Dependencies
+      run: |
+        sudo apt-get update
         sudo apt-get install -y perl
         sudo apt-get install -y libjson-perl
 
