@@ -1,9 +1,12 @@
 name: Run Perl Script Daily
 
 on:
+  push:
+    branches:
+      - main  # Runs on push events to the 'main' branch
   schedule:
-    - cron: '0 0 * * *'  # This runs the script every day at midnight UTC
-  workflow_dispatch:  # Allows you to manually trigger the workflow
+    - cron: '0 0 * * *'  # Runs the script every day at midnight UTC
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   run-perl-script:
