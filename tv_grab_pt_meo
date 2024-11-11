@@ -141,7 +141,7 @@ our ($opt_help, $opt_output,
 	$opt_list_channels, $opt_offset, $opt_days, $opt_fast,
 	$opt_debug);
 $opt_quiet  = 0; # default
-$opt_days   = 7; # default
+$opt_days   = 2; # default
 $opt_offset = 0; # default
 $opt_fast   = 0; # default
 $opt_debug  = 0;
