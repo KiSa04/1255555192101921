@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="none"?>
+<!DOCTYPE tv SYSTEM "xmltv.dtd">
+
+<tv source-info-url="http://www.meo.pt/" source-data-url="http://www.meo.pt/tv/canais-programacao/guia-tv" generator-info-name="XMLTV" generator-info-url="http://xmltv.org/">
+  <channel id="RTP1.meo.pt">
+    <display-name lang="pt">RTP 1</display-name>
+    <icon src="https://www.meo.pt/PublishingImages/canais/rtp-1.png" />
+  </channel>
+  <programme start="20241112001700 +0000" stop="20241112012400 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Cidade Velha Convida</title>
+    <desc lang="pt">Esta semana a Cidade Velha Convida a voz da morna, Cremilda Medina. Cremilda começou a cantar em criança e é descoberta num concurso de talentos. Depois disso não mais parou de espalhar a morna e a coladeira pelos palcos, primeiro de Cabo Verde, depois do mundo.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Cidade Velha Convida - Ep. 5&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns"> . 4 . </episode-num>
+  </programme>
+  <programme start="20241112012400 +0000" stop="20241112014400 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">A Essência</title>
+    <desc lang="pt">Programa semanal sobre a vinha e os vinhos portugueses em Portugal e no mundo. O mercado nacional e o mercado de exportação. A excelência de alguns dos nossos vinhos.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=A Ess�ncia T10 - Ep. 30&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">9 . 29 . </episode-num>
+  </programme>
+  <programme start="20241112014400 +0000" stop="20241112023500 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Grandiosa Enciclopédia Do Ludopédio</title>
+    <desc lang="pt">Carlos Manuel Albuquerque, Rui Miguel Tovar e João Nuno Coelho fazem um programa alternativo sobre futebol. Um dicionário da tribo da bola, com histórias diferentes dentro e fora das quatro linhas.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Grandiosa Enciclop�dia Do Ludop�dio T10 - Ep. 10&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">9 . 9 . </episode-num>
+  </programme>
+  <programme start="20241112023500 +0000" stop="20241112031300 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Amor Sem Igual</title>
+    <desc lang="pt">Angélica é uma prostituta vistosa, conhecida por 'Poderosa', que frequenta regularmente um posto de gasolina de beira da estrada. É lá que conhece o agrónomo Miguel, um paulista nobre com bom carácter, que vende os legumes que cultiva na sua propriedade. Mal se cruzam, a atração é evidente, embora não adivinhem o que o futuro lhes reserva.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Amor Sem Igual - Ep. 61&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns"> . 60 . </episode-num>
+  </programme>
+  <programme start="20241112031300 +0000" stop="20241112060000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Televendas</title>
+    <desc lang="pt">Todos os dias, um espaço dedicado a vendas por televisão, em que são feitas demonstrações dos produtos.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Televendas&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112060000 +0000" stop="20241112100000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Bom Dia Portugal</title>
+    <desc lang="pt">O Bom Dia Portugal é um programa de informação apresentado por João Tomé de Carvalho e Carla Trafaria, de 2a a 6a feira entre as 06:30h e as 10:00h. Todos os dias, o Bom Dia Portugal dedica espaços específicos às notícias da atualidade nacional e internacional, desporto, meteorologia, trânsito e economia.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Bom Dia Portugal&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112100000 +0000" stop="20241112125900 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Praça da Alegria</title>
+    <desc lang="pt">Jorge Gabriel e Sónia Araújo dão-lhe as boas vindas à Praça da Alegria! Porque sabemos que gosta da nossa companhia, oferecemos boa disposição até à hora de almoço! De segunda a sexta-feira, a Praça da Alegria leva até si a melhor música, as últimas tendências da moda, conselhos úteis e muitas dicas que facilitam o seu dia-a-dia.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Pra�a da Alegria&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112125900 +0000" stop="20241112142800 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Jornal da Tarde</title>
+    <desc lang="pt">Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto. Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Jornal da Tarde&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112142800 +0000" stop="20241112151100 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Amor Sem Igual</title>
+    <desc lang="pt">Angélica é uma prostituta vistosa, conhecida por 'Poderosa', que frequenta regularmente um posto de gasolina de beira da estrada. É lá que conhece o agrónomo Miguel, um paulista nobre com bom carácter, que vende os legumes que cultiva na sua propriedade. Mal se cruzam, a atração é evidente, embora não adivinhem o que o futuro lhes reserva.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Amor Sem Igual - Ep. 62&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns"> . 61 . </episode-num>
+  </programme>
+  <programme start="20241112151100 +0000" stop="20241112173000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">A Nossa Tarde</title>
+    <desc lang="pt">Pensado a partir da essência da apresentadora, Tânia Ribas de Oliveira, o programa 'A Nossa Tarde' tem, por isso, um lado mais emocional, com base em histórias com final feliz, e um lado muito divertido, ou não fosse a nossa Tânia uma pessoa que gosta de dar umas belas e sonoras gargalhadas.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=A Nossa Tarde&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112173000 +0000" stop="20241112190600 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Portugal em Direto</title>
+    <desc lang="pt">A atualidade diária do nosso país.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Portugal em Direto&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112190600 +0000" stop="20241112195900 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">O Preço Certo</title>
+    <desc lang="pt">Há mais de duas décadas em emissão contínua na RTP1, 'O Preço Certo', é o gameshow de maior longevidade da televisão mundial. Estreado pela primeira vez em 1956 nos Estados Unidos, já foi transmitido em mais de 30 países. O sucesso por todo o mundo é testemunho da sua contínua popularidade e vitalidade, provando ser um clássico e intemporal formato de programas de entretenimento.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=O Pre�o Certo&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112195900 +0000" stop="20241112210100 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Telejornal</title>
+    <desc lang="pt">A mais rigorosa seleção de notícias, todos os dias às 20h00. De segunda a domingo, João Adelino Faria, José Rodrigues dos Santos e Ana Lourenço mostram-lhe o que de mais relevante se passou o país e no mundo. Se é importante está no Telejornal.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Telejornal&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112210100 +0000" stop="20241112213300 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Entre O Mar E A Terra</title>
+    <desc lang="pt">Todo este episódio viu tradições passarem de avós a filhos e destes a netos. Luís Lopes e toda a família levam aos ombros traduções milenares na produção de sal. Onde outrora andou o mar ficou a maior pedra de sal gema do mundo. Só por isso já valia a viagem a Rio Maior mas a qualidade do sal e toda a atividade que rodeia este ouro branco acrescenta valor ao tesouro.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Entre O Mar E A Terra T2 - Ep. 10&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">1 . 9 . </episode-num>
+  </programme>
+  <programme start="20241112213300 +0000" stop="20241112223200 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Joker</title>
+    <desc lang="pt">Vasco Palmeirim apresenta o JOKER, o concurso favorito dos portugueses. Um concorrente, com a ajuda de 7 Jokers e do Super Joker, responde a 12 perguntas com um só objetivo em mente: Conquistar os 50 000 euros do prémio máximo!.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Joker T8 - Ep. 97&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">7 . 96 . </episode-num>
+  </programme>
+  <programme start="20241112223200 +0000" stop="20241112235800 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">É Ou Não É? - O Grande Debate</title>
+    <desc lang="pt">'É Ou Não É? - O Grande Debate: O Que Esperar da Nova Administração Trump?' Donald Trump está mesmo de regresso à Casa Branca e ninguém sabe bem o que esperar do novo mandato, no país e no planeta. Se as promessas eleitorais forem levadas a sério, que papel terão os Estados Unidos na NATO e na evolução dos conflitos na Ucrânia e em Israel? Como vai a Europa lidar com mais impostos sobre os produtos que exporta para a América?</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=� Ou N�o �? - O Grande Debate&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241112235800 +0000" stop="20241113014000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">As Horas De Luz</title>
+    <desc lang="pt">Um filme que retrata os problemas do envelhecimento e da doença. Maria espera por uma operação às cataratas, que quase lhe tiraram a visão. Mas a sua dependência despertará nos vizinhos, e na filha distante, uma oportunidade de reatar laços perdidos.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=As Horas De Luz&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113014000 +0000" stop="20241113020200 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Terra Europa</title>
+    <desc lang="pt">A série acompanha o trabalho dos eurodeputados e das instituições europeias como nunca antes visto, através de quatro novas rúbricas. Descomplicar a Europa com o 'Dicionário Europeu'. Construir a Europa, com a participação de jovens portugueses eleitores. Dar espaço à cultura através do 'Cinema Europa', com a divulgação dos festivais e prêmios europeus. E conhecer os 27 Estados membros, com um segmento de estatísticas europeias.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Terra Europa T2 - Ep. 6&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">1 . 5 . </episode-num>
+  </programme>
+  <programme start="20241113020200 +0000" stop="20241113024500 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Amor Sem Igual</title>
+    <desc lang="pt">Angélica é uma prostituta vistosa, conhecida por 'Poderosa', que frequenta regularmente um posto de gasolina de beira da estrada. É lá que conhece o agrónomo Miguel, um paulista nobre com bom carácter, que vende os legumes que cultiva na sua propriedade. Mal se cruzam, a atração é evidente, embora não adivinhem o que o futuro lhes reserva.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Amor Sem Igual - Ep. 62&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns"> . 61 . </episode-num>
+  </programme>
+  <programme start="20241113024500 +0000" stop="20241113025800 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Hora De Agir</title>
+    <desc lang="pt">No Hora de Agir desta semana vamos continuar à conversa sobre temas importantes deste nosso tempo. E um deles é a importância de preservar a biodiversidade. Já falamos sobre as espécies invasoras do reino vegetal. Hoje é hora de falarmos sobre as espécies invasoras do reino animal.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Hora De Agir T2 - Ep. 39&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">1 . 38 . </episode-num>
+  </programme>
+  <programme start="20241113025800 +0000" stop="20241113060000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Televendas</title>
+    <desc lang="pt">Todos os dias, um espaço dedicado a vendas por televisão, em que são feitas demonstrações dos produtos.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Televendas&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113060000 +0000" stop="20241113100000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Bom Dia Portugal</title>
+    <desc lang="pt">O Bom Dia Portugal é um programa de informação apresentado por João Tomé de Carvalho e Carla Trafaria, de 2a a 6a feira entre as 06:30h e as 10:00h. Todos os dias, o Bom Dia Portugal dedica espaços específicos às notícias da atualidade nacional e internacional, desporto, meteorologia, trânsito e economia.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Bom Dia Portugal&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113100000 +0000" stop="20241113125900 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Praça da Alegria</title>
+    <desc lang="pt">Jorge Gabriel e Sónia Araújo dão-lhe as boas vindas à Praça da Alegria! Porque sabemos que gosta da nossa companhia, oferecemos boa disposição até à hora de almoço! De segunda a sexta-feira, a Praça da Alegria leva até si a melhor música, as últimas tendências da moda, conselhos úteis e muitas dicas que facilitam o seu dia-a-dia.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Pra�a da Alegria&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113125900 +0000" stop="20241113143000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Jornal da Tarde</title>
+    <desc lang="pt">Todos os dias, às 13 horas, a sua hora de almoço é completada com a atualização das notícias que marcam a atualidade nacional e mundial, desde a política, a economia, a sociedade e sem esquecer o desporto. Reportagens no local, entrevistas em direto e sempre a isenção e o respeito pela verdade que marcam a informação na RTP.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Jornal da Tarde&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113143000 +0000" stop="20241113151500 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Amor Sem Igual</title>
+    <desc lang="pt">Angélica é uma prostituta vistosa, conhecida por 'Poderosa', que frequenta regularmente um posto de gasolina de beira da estrada. É lá que conhece o agrónomo Miguel, um paulista nobre com bom carácter, que vende os legumes que cultiva na sua propriedade. Mal se cruzam, a atração é evidente, embora não adivinhem o que o futuro lhes reserva.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Amor Sem Igual - Ep. 63&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns"> . 62 . </episode-num>
+  </programme>
+  <programme start="20241113151500 +0000" stop="20241113173000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">A Nossa Tarde</title>
+    <desc lang="pt">Pensado a partir da essência da apresentadora, Tânia Ribas de Oliveira, o programa 'A Nossa Tarde' tem, por isso, um lado mais emocional, com base em histórias com final feliz, e um lado muito divertido, ou não fosse a nossa Tânia uma pessoa que gosta de dar umas belas e sonoras gargalhadas.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=A Nossa Tarde&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113173000 +0000" stop="20241113190600 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Portugal em Direto</title>
+    <desc lang="pt">A atualidade diária do nosso país.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Portugal em Direto&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113190600 +0000" stop="20241113194500 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">O Preço Certo</title>
+    <desc lang="pt">Há mais de uma década em emissão contínua na RTP1, 'O Preço Certo', é o gameshow de maior longevidade da televisão mundial. Estreado pela primeira vez em 1956 nos Estados Unidos, já foi transmitido em mais de 30 países. O sucesso por todo o mundo é testemunho da sua contínua popularidade e vitalidade, provando ser um clássico e intemporal formato de programas de entretenimento.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=O Pre�o Certo&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113194500 +0000" stop="20241113195900 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Direito de Antena: ASP</title>
+    <desc lang="pt">Espaço da responsabilidade das entidades intervenientes. Destina-se essencialmente à divulgação de campanhas políticas, de solidariedade ou outras associações de caráter diverso.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Direito de Antena: ASP&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113195900 +0000" stop="20241113210000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Telejornal</title>
+    <desc lang="pt">A mais rigorosa seleção de notícias, todos os dias às 20h00. De segunda a domingo, João Adelino Faria, José Rodrigues dos Santos e Ana Lourenço mostram-lhe o que de mais relevante se passou o país e no mundo. Se é importante está no Telejornal.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Telejornal&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+  </programme>
+  <programme start="20241113210000 +0000" stop="20241113213000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Outras Histórias</title>
+    <desc lang="pt">Cada um de nós tem uma história para contar e para partilhar. Em cada uma destas reportagens ficaremos a conhecer a história de pessoas ou de projetos que, por alguma razão, inspiram ou surpreendem.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Outras Hist�rias T7 - Ep. 15&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">6 . 14 . </episode-num>
+  </programme>
+  <programme start="20241113213000 +0000" stop="20241113223000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Joker</title>
+    <desc lang="pt">Vasco Palmeirim apresenta o JOKER, o concurso favorito dos portugueses. Um concorrente, com a ajuda de 7 Jokers e do Super Joker, responde a 12 perguntas com um só objetivo em mente: Conquistar os 50 000 euros do prémio máximo!.</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=Joker T8 - Ep. 98&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">7 . 97 . </episode-num>
+  </programme>
+  <programme start="20241113223000 +0000" stop="20241114000000 +0000" channel="RTP1.meo.pt">
+    <title lang="pt">Cá Por Casa com Herman José</title>
+    <desc lang="pt">Neste Cá por Casa Herman recebe Gabriela Barros, João Sá Coelho, Miguel Raposo, Toy e Sofia Hoffmann. Sofia Hoffmann está de regresso com '[In]LOVE', o primeiro single do seu terceiro álbum de estúdio com o mesmo título, lançado a 8 de novembro, e que conta com a produção do renomado cantor, pianista e compositor Ivan Lins. Toy tem novo EP - 'Carrossel de loucura' .</desc>
+    <icon src="https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=C� Por Casa com Herman Jos� T11 - Ep. 8&amp;chCallLetter=RTP1&amp;profile=16_9&amp;width=230" />
+    <episode-num system="xmltv_ns">10 . 7 . </episode-num>
+  </programme>
+</tv>
