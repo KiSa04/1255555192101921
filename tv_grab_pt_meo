@@ -349,8 +349,8 @@ foreach my $ch_did (@channels) {
         $icon =~ s/&amp;/&/g;  # Replace &amp; with & (or whatever you need)
         $_->{icon}[0] = $icon;  # Update the first element with the modified value
 print STDERR " $icon \n" if $opt_debug;
-    }
 		t $icon;
+    }
 		$writer->write_programme($_);
 		$some = 1;
 	}
