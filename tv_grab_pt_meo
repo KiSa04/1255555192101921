@@ -343,14 +343,6 @@ foreach my $ch_did (@channels) {
 	next unless $channels{$ch_did} || $channellabels{$ch_did};
 
 	foreach (get_programmes($ch_did)) {
-		if (ref $_->{icon} eq 'ARRAY') {
-        # Dereference and modify the first element (or all elements if needed)
-        my $icon = $_->{icon}[0];  # Access the first element of the array
-        $icon =~ s/&amp;/&/g;  # Replace &amp; with & (or whatever you need)
-        $_->{icon}[0] = $icon;  # Update the first element with the modified value
-print STDERR " $icon \n" if $opt_debug;
-		t $icon;
-    }
 		$writer->write_programme($_);
 		$some = 1;
 	}
@@ -735,7 +727,11 @@ sub make_programme_hash {
 	$prog{'sub-title'} 	= [ [ toUTF8( $cur->{'subtitle'} ), $LANG ] ] if $cur->{'subtitle'};
 	$prog{'category'} 	= [ [ toUTF8( $cur->{'category'} ), $LANG ] ] if $cur->{'category'};
 	$prog{'episode-num'}	= [[ $cur->{'episode-num'}, 'xmltv_ns' ]] if $cur->{'episode-num'};
-	$prog{'icon'} 		= [{'src' => $cur->{'p_image'}}] if $cur->{'p_image'};
+	if ($cur->{'p_image'}) {
+        my $image_url = $cur->{'p_image'};
+        $image_url =~ s/&amp;/&/g; # Replace & with &amp;
+        $prog{'icon'} = [{'src' => $image_url}];
+    	}
 	$prog{'start'} 		= $cur->{'start'} if $cur->{'start'};
 	$prog{'stop'} 		= $cur->{'stop'} if $cur->{'stop'};
 	$prog{'desc'} 		= [ [ toUTF8( $cur->{'desc'} ), $LANG ] ] if $cur->{'desc'};
