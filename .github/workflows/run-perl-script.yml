@@ -38,6 +38,7 @@ jobs:
         git config --global user.email "actions@github.com"
         git add listings.xml  # Make sure the file is created in the Perl script
         git commit -m "Add daily output file"
+        git pull --rebase origin main  # Fetch latest changes to avoid conflicts
         git push https://github.com/KiSa04/1255555192101921.git main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub provides this automatically for authentication
