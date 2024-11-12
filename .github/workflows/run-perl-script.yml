@@ -31,14 +31,6 @@ jobs:
     - name: Run Perl Script
       run: |
         perl ./tv_grab_pt_meo --config-file ./tv_grab_pt_meo.conf --output listings.xml --debug # Replace with the path to your Perl script
-        sed -i 's/&amp;/\&/g' listings.xml
-        # Verify that replacement has taken place
-        if grep '&amp;' listings.xml; then
-          echo "Replacement failed for some &amp; instances."
-          exit 1
-        else
-          echo "Replacement successful: No &amp; found."
-        fi
 
     - name: Commit and push the output file
       run: |
