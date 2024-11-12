@@ -346,6 +346,8 @@ foreach my $ch_did (@channels) {
 		my $icon = $_->{icon};  # Adjust this depending on your data structure
     		$icon =~ s/&amp;/&/g;  # Manually replace & with &amp; if needed
     		$_->{icon} = $icon;     # Update the program's URL field with the modified value
+		print STDERR " $_ \n" if $opt_debug;
+		t $_;
 		$writer->write_programme($_);
 		$some = 1;
 	}
