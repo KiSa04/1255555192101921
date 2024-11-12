@@ -343,7 +343,7 @@ foreach my $ch_did (@channels) {
 	next unless $channels{$ch_did} || $channellabels{$ch_did};
 
 	foreach (get_programmes($ch_did)) {
-		my $p_image = $_->{icon};  # Adjust this depending on your data structure
+		my $icon = $_->{icon};  # Adjust this depending on your data structure
     		$icon =~ s/&amp;/&/g;  # Manually replace & with &amp; if needed
     		$_->{icon} = $icon;     # Update the program's URL field with the modified value
 		$writer->write_programme($_);
