@@ -406,6 +406,10 @@ sub fix_utf8( $ ) {
 	$_[0] =~ s/\x{201d}/\xE2\x80\x9D/og;      # close double quote
 	$_[0] =~ s/\x{2039}/\xE2\x80\x98/og;      # open single quote
 	$_[0] =~ s/\x{203a}/\xE2\x80\x99/og;      # close single quote
+	$_[0] =~ s/\x{00C7}/\xC7/g;               # C cedilla (no need to encode as UTF-8)
+	$_[0] =~ s/\x{00B4}/\xB4/g;               # Acute accent (´)
+	$_[0] =~ s/\x{0060}/\x60/g;               # Grave accent (`)
+	$_[0] =~ s/\x{005E}/\x5E/g;               # Circumflex (^)
 
 	return $_[0];
 }
