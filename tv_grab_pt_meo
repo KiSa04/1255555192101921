@@ -273,7 +273,7 @@ if (defined $opt_output) {
 	$w_args{OUTPUT} = $fh;
 }
 $w_args{encoding} = 'UTF-8';
-$w_args{escape} = 'all';
+$w_args{escape} = 'none';
 my $writer;
 sub start_writing() { ($writer = new XMLTV::Writer(%w_args))->start($HEAD) }
 
