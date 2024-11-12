@@ -343,10 +343,13 @@ foreach my $ch_did (@channels) {
 	next unless $channels{$ch_did} || $channellabels{$ch_did};
 
 	foreach (get_programmes($ch_did)) {
-		my $icon = $_->{icon};  # Adjust this depending on your data structure
-    		$icon =~ s/&amp;/&/g;  # Manually replace & with &amp; if needed
-    		$_->{icon} = $icon;     # Update the program's URL field with the modified value
-		print STDERR " $icon \n" if $opt_debug;
+		if (ref $_->{icon} eq 'ARRAY') {
+        # Dereference and modify the first element (or all elements if needed)
+        my $icon = $_->{icon}[0];  # Access the first element of the array
+        $icon =~ s/&amp;/&/g;  # Replace &amp; with & (or whatever you need)
+        $_->{icon}[0] = $icon;  # Update the first element with the modified value
+print STDERR " $icon \n" if $opt_debug;
+    }
 		t $icon;
 		$writer->write_programme($_);
 		$some = 1;
