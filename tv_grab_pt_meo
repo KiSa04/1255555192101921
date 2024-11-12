@@ -261,7 +261,7 @@ print STDERR "using channel format '$channel_format' \n" if $opt_debug;
 
 ######################################################################
 # Not configuration, we must be writing something, either full
-# listings or just channels.
+# listings or just channels
 #
 die if $mode ne 'grab' and $mode ne 'list-channels';
 
