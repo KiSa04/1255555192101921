@@ -615,6 +615,7 @@ sub get_programmes {
 										
 					if (defined $data->{d}->{'progName'}) {
     						$prog_name = $data->{d}->{'progName'};
+						$prog_name =~ s/ /%20/g;
 					} else {
     					        print STDERR "progName is missing\n" if $opt_debug;
 						t "progName is missing\n";
