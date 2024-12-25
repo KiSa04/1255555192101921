@@ -466,7 +466,7 @@ sub get_programmes {
     t $content;
 
     # Set up the cookies (like in the PowerShell script)
-    my $cookies = 'PtInfo=eyJVc2VyTmFtZSI6Ikpvc8OpIiwiTmF2SWQiOiJPcGItMUE3UjhFRGx0cDljbFdXcXpFQmM0Vm4zSmdLS3Q5WTFfNnowWTJnIiwiSWRQSUQiOiJQVENMSUVOVEUiLCJBbGlhcyI6ImRhbmllbG1lbmRlczAwNEBnbWFpbC5jb20ifQ==; 
+    my $cookies = 'PtInfo=eyJVc2VyTmFtZSI6Ik5vTmFtZSIsIk5hdklkIjoiT3BiLTFBN1I4RURsdHA5Y2xXV3F6RUJjNFZuM0pnS0t0OVkxXzZ6MFkyZyIsIklkUElEIjoiUFRDTElFTlRFIiwiQWxpYXMiOiJub21haWxAZ21haWwuY29tIn0=; 
                    byside_webcare_tuid=zhbxtnfixzzlqiakpk7lwy1gxzsorpwzhdjudyyzvuhpcvl9th; 
                    MEOAuthCampaign=1; 
                    UqZBpD3n3iPIDwJU9DmYiWmUQf4W9ZRPPtjUq5LGpgmWAx3WM7WKvw__=v1l5o8g++Cqfo';
