@@ -632,7 +632,7 @@ sub get_programmes {
 
 					    #print STDERR " https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=$prog_name&chCallLetter=$channel_sigla&profile=16_9&width=2030 \n" if $opt_debug && !$debug_url_done; $debug_url_done=1;
     
-				            $p_image = "https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=$prog_name&chCallLetter=$channel_sigla&profile=16_9&width=230";
+				            $p_image = "https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=$prog_name&chCallLetter=$channel_sigla&profile=16_9&width=2030";
 					    $p_image =~ s/&amp;/&/g;
 
 					# is there a movie rating?
