@@ -772,7 +772,7 @@ sub get_channels {
             'Content-Type'          => 'application/json; charset=utf-8',
             'Origin'                => 'https://www.meo.pt',
             'Connection'            => 'keep-alive',
-            'Cookie'                => 'UqZBpD3n3iPIDwJU9DmYiWmUQf4W9ZRPPtjUq5LGpgmWAx3WM7WKvw__=v1l5o8g++Cqfo',
+            'Cookie'                => 'UqZBpD3n3iPIDwJU9DmYiWmUQf4W9ZRPPtjUq5LGpgmWAx3WM7WKvw__=v1kZo8g++Cdpd; byside_webcare_tuid=5yez6vvt90nmq2yyc517bfmx8b91z9d0ptqaalj668h5plvi1q',
             'Sec-Fetch-Dest'        => 'empty',
             'Sec-Fetch-Mode'        => 'cors',
             'Sec-Fetch-Site'        => 'same-site'
