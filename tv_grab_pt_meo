@@ -313,18 +313,30 @@ my $bar = new XMLTV::ProgressBar('getting listings', scalar @channels)
 
 # write the <channels> elements
 foreach my $ch_did (@channels) {
-	die if not defined $ch_did;
+    die "Channel DID not defined" if not defined $ch_did;
 
-	my $ch = ( $channel_format eq 'number' ? $channels{$ch_did} : $channels{$channellabels{$ch_did}->{'id'}} );
+    my $ch;
+    if ($channel_format eq 'number') {
+        die "Channels hash not defined for $ch_did" if not defined $channels{$ch_did};
+        $ch = $channels{$ch_did};
+    } else {
+        die "Channel labels not defined for $ch_did" if not defined $channellabels{$ch_did};
+        my $channel_id = $channellabels{$ch_did}->{'id'};
+        die "Channel ID not defined for $ch_did" if not defined $channel_id;
+        $ch = $channels{$channel_id};
+        die "Channels hash not defined for channel ID $channel_id" if not defined $ch;
+    }
 
-	my $ch_name=$ch->{'channel-name'};
-	my $channel = { 'id'			=> ( $channel_format eq 'number' ? $ch->{'id_by_number'} : $ch->{'id_by_label'} ),
-					'display-name'	=> $ch->{'display-name'},
-					'icon'			=> $ch->{'icon'},
-				  };
+    my $ch_name = $ch->{'channel-name'};
+    my $channel = {
+        'id' => ($channel_format eq 'number' ? $ch->{'id_by_number'} : $ch->{'id_by_label'}),
+        'display-name' => $ch->{'display-name'},
+        'icon' => $ch->{'icon'},
+    };
 
-	$writer->write_channel($channel);
+    $writer->write_channel($channel);
 }
+
 
 
 # time limits for grab
