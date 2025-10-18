@@ -456,24 +456,29 @@ sub trim_all( $ ) {
 }
 
 sub get_programmes {
-    my ($ch_xmltv_id) = @_;
+    my @all_ids;
+    if ($channel_format eq 'number') {
+        @all_ids = map { toUTF8($channels{$_}->{'callsign'}) } keys %channels;
+    } elsif ($channel_format eq 'label') {
+        @all_ids = map { 
+            my $label_id = $channellabels{$_}->{'id'};
+            toUTF8($channels{$label_id}->{'callsign'}) if $channels{$label_id};
+        } keys %channellabels;
+    }
 
-    t "Getting channel $ch_xmltv_id\n";
+    # remove undef/empty
+    @all_ids = grep { defined && $_ ne '' } @all_ids;
 
-    $ch_xmltv_id =~ /(.+?)\.meo\.pt/;
-
-    my $ch_meo_id;
-    $ch_meo_id = $channels{$ch_xmltv_id}->{'callsign'}  if  $channel_format eq 'number';
-    $ch_meo_id = $channels{$channellabels{$ch_xmltv_id}->{'id'}}->{'callsign'}  if  $channel_format eq 'label';
-    $ch_meo_id = toUTF8($ch_meo_id);
-    print STDERR " CH= $ch_meo_id \n" if $opt_debug;
+    # create JSON array of all channels
+    my $channels_json = join('","', @all_ids);
 
     my $url = 'https://authservice.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramsFromChannels';
-    #print STDERR " URL= $url \n" if $opt_debug;
-    #t $url;
 
-    my $content = '{ "service":"channelsguide", "channels":["' . $ch_meo_id . '"], "dateStart":"' . $dt_start->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "dateEnd":"' . $dt_stop->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "accountID":"" }';
-    #print STDERR " B= $content \n" if $opt_debug;
+    my $content = '{ "service":"channelsguide", "channels":["' . $channels_json . '"], "dateStart":"' 
+        . $dt_start->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "dateEnd":"' 
+        . $dt_stop->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "accountID":"" }';
+
+    print STDERR "REQUEST BODY:\n$content\n" if $opt_debug;
 
     t $content;
 
@@ -512,14 +517,12 @@ sub get_programmes {
 
 	my $programmes = {};
 
-	foreach my $ch (@{ $data->{d}->{channels} }) {
+foreach my $ch (@{ $data->{d}->{channels} }) {
 
-		if (toUTF8($ch->{sigla}) ne $ch_meo_id) {
-			print STDERR "ERROR: unexpected channel- wanted $ch_meo_id got ".toUTF8($ch->{sigla})." \n"; next;
-		}
+    my $ch_meo_id = toUTF8($ch->{sigla});
+    print STDERR "Processing channel: $ch_meo_id\n" if $opt_debug;
 
-		foreach my $prog (@{ $ch->{programs} }) {
-
+    foreach my $prog (@{ $ch->{programs} }) {
 			my ( $p_id, $p_category, $p_title, $p_desc, $p_image, $p_duration, $p_year, $p_start, $p_stop, $p_start_epoch, $p_stop_epoch, $p_episode_num, $p_rating );
 
 			$p_id		= $prog->{'uniqueId'};
