@@ -457,19 +457,20 @@ sub trim_all( $ ) {
 
 sub get_programmes {
     my @all_ids;
+
     if ($channel_format eq 'number') {
-        @all_ids = map { toUTF8($channels{$_}->{'callsign'}) } keys %channels;
+        @all_ids = map { $channels{$_}->{'callsign'} } keys %channels;  # no toUTF8 here
     } elsif ($channel_format eq 'label') {
-        @all_ids = map { 
+        @all_ids = map {
             my $label_id = $channellabels{$_}->{'id'};
-            toUTF8($channels{$label_id}->{'callsign'}) if $channels{$label_id};
+            $channels{$label_id}->{'callsign'} if $channels{$label_id};
         } keys %channellabels;
     }
 
-    # remove undef/empty
     @all_ids = grep { defined && $_ ne '' } @all_ids;
 
-    # create JSON array of all channels
+    @all_ids = grep { /^[A-Z0-9_-]+$/ } @all_ids;
+
     my $channels_json = join('","', @all_ids);
 
     my $url = 'https://authservice.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramsFromChannels';
