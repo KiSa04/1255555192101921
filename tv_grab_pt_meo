@@ -713,20 +713,20 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 
 	# did we get any programmes?
 	if ( scalar keys %{$programmes} == 0 ) {
-			warn "$url (toUTF8($ch->{sigla})) : no programmes found\n";
+			warn ": no programmes found\n";
 		return;
 	}
 
 	# format the programmes ready for XMLTV::Writer
 	my @r;
-	foreach ( keys %{$programmes} ) {
-		my $_ch_progs = $programmes->{$_};
-		foreach ( sort keys %{$_ch_progs} ) {
-			my $_dt_progs = $_ch_progs->{$_};
-			foreach (@{ $_dt_progs }) {
-				push @r, make_programme_hash( toUTF8($ch->{sigla}), $_ );
-			 }
-		}
+	foreach my $ch_sigla (keys %{$programmes}) {
+	    my $_ch_progs = $programmes->{$ch_sigla};
+	    foreach my $start_epoch (sort keys %{$_ch_progs}) {
+	        my $_dt_progs = $_ch_progs->{$start_epoch};
+	        foreach my $cur (@{ $_dt_progs }) {
+	            push @r, make_programme_hash($ch_sigla, $cur);
+	        }
+	    }
 	}
 
 	return @r;
@@ -735,7 +735,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 
 # reformat the data to something acceptable to xmltv:::writer
 sub make_programme_hash {
-	my ( toUTF8($ch->{sigla}), $cur ) = @_;
+	my ( $ch_sigla, $cur ) = @_;
 
 	my %prog;
 
