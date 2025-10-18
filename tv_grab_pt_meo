@@ -456,27 +456,24 @@ sub trim_all( $ ) {
 }
 
 sub get_programmes {
-    my @all_ids;
+    my ($ch_xmltv_id) = @_;
 
-    if ($channel_format eq 'number') {
-        @all_ids = map { $channels{$_}->{'callsign'} } keys %channels;  # no toUTF8 here
-    } elsif ($channel_format eq 'label') {
-        @all_ids = map {
-            my $label_id = $channellabels{$_}->{'id'};
-            $channels{$label_id}->{'callsign'} if $channels{$label_id};
-        } keys %channellabels;
-    }
+    t "Getting channel $ch_xmltv_id\n";
 
-    @all_ids = grep { defined && $_ ne '' } @all_ids;
+    $ch_xmltv_id =~ /(.+?)\.meo\.pt/;
 
-    @all_ids = grep { /^[A-Z0-9_-]+$/ } @all_ids;
-
-    my $channels_json = join('","', @all_ids);
+    my $ch_meo_id;
+    $ch_meo_id = $channels{$ch_xmltv_id}->{'callsign'}  if  $channel_format eq 'number';
+    $ch_meo_id = $channels{$channellabels{$ch_xmltv_id}->{'id'}}->{'callsign'}  if  $channel_format eq 'label';
+    $ch_meo_id = toUTF8($ch_meo_id);
+    print STDERR " CH= $ch_meo_id \n" if $opt_debug;
 
     my $url = 'https://authservice.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramsFromChannels';
+    #print STDERR " URL= $url \n" if $opt_debug;
+    #t $url;
 
-    my $content = '{ "service":"channelsguide", "channels":["' . $channels_json . '"], "dateStart":"' . $dt_start->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "dateEnd":"' . $dt_stop->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "accountID":"" }';
-    print STDERR "REQUEST BODY:\n$content\n" if $opt_debug;
+    my $content = '{ "service":"channelsguide", "channels":["' . $ch_meo_id . '"], "dateStart":"' . $dt_start->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "dateEnd":"' . $dt_stop->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "accountID":"" }';
+    #print STDERR " B= $content \n" if $opt_debug;
 
     t $content;
 
@@ -515,12 +512,14 @@ sub get_programmes {
 
 	my $programmes = {};
 
-foreach my $ch (@{ $data->{d}->{channels} }) {
+	foreach my $ch (@{ $data->{d}->{channels} }) {
 
-    my $ch_meo_id = toUTF8($ch->{sigla});
-    print STDERR "Processing channel: $ch_meo_id\n" if $opt_debug;
+		if (toUTF8($ch->{sigla}) ne $ch_meo_id) {
+			print STDERR "ERROR: unexpected channel- wanted $ch_meo_id got ".toUTF8($ch->{sigla})." \n"; next;
+		}
 
-    foreach my $prog (@{ $ch->{programs} }) {
+		foreach my $prog (@{ $ch->{programs} }) {
+
 			my ( $p_id, $p_category, $p_title, $p_desc, $p_image, $p_duration, $p_year, $p_start, $p_stop, $p_start_epoch, $p_stop_epoch, $p_episode_num, $p_rating );
 
 			$p_id		= $prog->{'uniqueId'};
@@ -662,7 +661,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 
 			my %prog;
 			#$prog{'channel'}	= $ch_xmltv_id.'.'.$DOMAIN;
-			$prog{'channel'}	= ( $channel_format eq 'number' ? $channels{toUTF8($ch->{sigla})}->{'id_by_number'} : $channels{$channellabels{toUTF8($ch->{sigla})}->{'id'}}->{'id_by_label'} );
+			$prog{'channel'}	= ( $channel_format eq 'number' ? $channels{$ch_xmltv_id}->{'id_by_number'} : $channels{$channellabels{$ch_xmltv_id}->{'id'}}->{'id_by_label'} );
 			$prog{'id'}		 	= $p_id;
 			$prog{'category'}	= $p_category;
 			$prog{'title'}		= $p_title;
@@ -680,19 +679,19 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 			# store the programme avoiding duplicates
 			# also check for duplicate start times and set clumpidx
 			{
-				if ( defined $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } ) {
+				if ( defined $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } ) {
 					# duplicate prog or contemporary?
 					my $dup = 0; my $_P;
-					foreach $_P ( @{ $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } } ) {
+					foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
 						$dup = 1  if ( $_P->{'title'} eq $prog{'title'} );	# duplicate
 					}
 					next PROG if $dup;	# ignore duplicates (go to next programme)
 					if (!$dup) {
 						# contemporary programme so set clumpidx
-						my $numclumps = scalar @{ $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } }  + 1;
+						my $numclumps = scalar @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } }  + 1;
 						# set (or adjust) clumpidx of existing programmes
 						my $i = 0;
-						foreach $_P ( @{ $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } } ) {
+						foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
 							$_P->{'clumpidx'} = "$i/$numclumps";
 							$i++;
 						}
@@ -703,7 +702,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 			}
 
 			# store the programme
-			push @{ $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } }, \%prog;
+			push @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } }, \%prog;
 
 		} # end each prog
 	} # programs-container
@@ -711,20 +710,20 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 
 	# did we get any programmes?
 	if ( scalar keys %{$programmes} == 0 ) {
-			warn ": no programmes found\n";
+			warn "$url ($ch_xmltv_id) : no programmes found\n";
 		return;
 	}
 
 	# format the programmes ready for XMLTV::Writer
 	my @r;
-	foreach my $ch_sigla (keys %{$programmes}) {
-	    my $_ch_progs = $programmes->{$ch_sigla};
-	    foreach my $start_epoch (sort keys %{$_ch_progs}) {
-	        my $_dt_progs = $_ch_progs->{$start_epoch};
-	        foreach my $cur (@{ $_dt_progs }) {
-	            push @r, make_programme_hash($ch_sigla, $cur);
-	        }
-	    }
+	foreach ( keys %{$programmes} ) {
+		my $_ch_progs = $programmes->{$_};
+		foreach ( sort keys %{$_ch_progs} ) {
+			my $_dt_progs = $_ch_progs->{$_};
+			foreach (@{ $_dt_progs }) {
+				push @r, make_programme_hash( $ch_xmltv_id, $_ );
+			 }
+		}
 	}
 
 	return @r;
@@ -733,7 +732,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 
 # reformat the data to something acceptable to xmltv:::writer
 sub make_programme_hash {
-	my ( $ch_sigla, $cur ) = @_;
+	my ( $ch_xmltv_id, $cur ) = @_;
 
 	my %prog;
 
