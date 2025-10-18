@@ -664,7 +664,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 
 			my %prog;
 			#$prog{'channel'}	= $ch_xmltv_id.'.'.$DOMAIN;
-			$prog{'channel'}	= ( $channel_format eq 'number' ? $channels{$ch_xmltv_id}->{'id_by_number'} : $channels{$channellabels{$ch_xmltv_id}->{'id'}}->{'id_by_label'} );
+			$prog{'channel'}	= ( $channel_format eq 'number' ? $channels{toUTF8($ch->{sigla})}->{'id_by_number'} : $channels{$channellabels{toUTF8($ch->{sigla})}->{'id'}}->{'id_by_label'} );
 			$prog{'id'}		 	= $p_id;
 			$prog{'category'}	= $p_category;
 			$prog{'title'}		= $p_title;
@@ -682,19 +682,19 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 			# store the programme avoiding duplicates
 			# also check for duplicate start times and set clumpidx
 			{
-				if ( defined $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } ) {
+				if ( defined $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } ) {
 					# duplicate prog or contemporary?
 					my $dup = 0; my $_P;
-					foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
+					foreach $_P ( @{ $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } } ) {
 						$dup = 1  if ( $_P->{'title'} eq $prog{'title'} );	# duplicate
 					}
 					next PROG if $dup;	# ignore duplicates (go to next programme)
 					if (!$dup) {
 						# contemporary programme so set clumpidx
-						my $numclumps = scalar @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } }  + 1;
+						my $numclumps = scalar @{ $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } }  + 1;
 						# set (or adjust) clumpidx of existing programmes
 						my $i = 0;
-						foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
+						foreach $_P ( @{ $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } } ) {
 							$_P->{'clumpidx'} = "$i/$numclumps";
 							$i++;
 						}
@@ -705,7 +705,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 			}
 
 			# store the programme
-			push @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } }, \%prog;
+			push @{ $programmes->{ toUTF8($ch->{sigla}) }->{ $p_start_epoch } }, \%prog;
 
 		} # end each prog
 	} # programs-container
@@ -713,7 +713,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 
 	# did we get any programmes?
 	if ( scalar keys %{$programmes} == 0 ) {
-			warn "$url ($ch_xmltv_id) : no programmes found\n";
+			warn "$url (toUTF8($ch->{sigla})) : no programmes found\n";
 		return;
 	}
 
@@ -724,7 +724,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 		foreach ( sort keys %{$_ch_progs} ) {
 			my $_dt_progs = $_ch_progs->{$_};
 			foreach (@{ $_dt_progs }) {
-				push @r, make_programme_hash( $ch_xmltv_id, $_ );
+				push @r, make_programme_hash( toUTF8($ch->{sigla}), $_ );
 			 }
 		}
 	}
@@ -735,7 +735,7 @@ foreach my $ch (@{ $data->{d}->{channels} }) {
 
 # reformat the data to something acceptable to xmltv:::writer
 sub make_programme_hash {
-	my ( $ch_xmltv_id, $cur ) = @_;
+	my ( toUTF8($ch->{sigla}), $cur ) = @_;
 
 	my %prog;
 
