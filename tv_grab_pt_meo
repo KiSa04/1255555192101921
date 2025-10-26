@@ -679,23 +679,25 @@ sub get_programmes {
 			# store the programme avoiding duplicates
 			# also check for duplicate start times and set clumpidx
 			{
-				if ( defined $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } ) {
-					# duplicate prog or contemporary?
-					my $dup = 0; my $_P;
-					PROG: foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
-						$dup = 1  if ( $_P->{'title'} eq $prog{'title'} );	# duplicate
-					}
-					next PROG if $dup;	# ignore duplicates (go to next programme)
-					if (!$dup) {
-						# contemporary programme so set clumpidx
-						my $numclumps = scalar @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } }  + 1;
-						# set (or adjust) clumpidx of existing programmes
+				PROGRAM: foreach my $p_start_epoch (sort keys %{ $programmes->{ $ch_xmltv_id } }) {
+					if ( defined $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } ) {
+						my $dup = 0; my $_P;
+				
+						foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
+							$dup = 1 if ( $_P->{'title'} eq $prog{'title'} ); # duplicate
+						}
+				
+						next PROGRAM if $dup;  # skip to next programme if duplicate
+				
+						# handle non-duplicates (contemporaries)
+						my $numclumps = scalar @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } + 1;
+				
 						my $i = 0;
 						foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
 							$_P->{'clumpidx'} = "$i/$numclumps";
 							$i++;
 						}
-						# set clumpidx for new programme
+				
 						$prog{'clumpidx'} = "$i/$numclumps";
 					}
 				}
