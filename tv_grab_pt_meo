@@ -682,7 +682,7 @@ sub get_programmes {
 				if ( defined $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } ) {
 					# duplicate prog or contemporary?
 					my $dup = 0; my $_P;
-					foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
+					PROG: foreach $_P ( @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } } ) {
 						$dup = 1  if ( $_P->{'title'} eq $prog{'title'} );	# duplicate
 					}
 					next PROG if $dup;	# ignore duplicates (go to next programme)
