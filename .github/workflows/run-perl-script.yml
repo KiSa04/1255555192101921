@@ -26,14 +26,21 @@ jobs:
       - name: Sanitize XML (HTML + ampersands)
         run: |
           sed -E '
-            # remove invalid HTML line breaks
+            # 1. remove invalid HTML line breaks
             s/<br[[:space:]]*\/?>/ /gi;
             s/<\/br>/ /gi;
-
-            # escape bare ampersands (not part of entities)
+      
+            # 2. fix broken entities like "& amp;"
+            s/&[[:space:]]+amp;/\&amp;/gi;
+            s/&[[:space:]]+lt;/\&lt;/gi;
+            s/&[[:space:]]+gt;/\&gt;/gi;
+            s/&[[:space:]]+quot;/\&quot;/gi;
+            s/&[[:space:]]+apos;/\&apos;/gi;
+      
+            # 3. escape remaining bare ampersands
             s/&([^a-zA-Z#])/&amp;\1/g;
-          ' meo.raw.xml > meo.sanitized.xml
-
+          ' meo.raw.xml > xmltv.xml
+          
       - name: Install xmllint
         run: |
           sudo apt-get update
@@ -41,7 +48,7 @@ jobs:
 
       - name: Validate XML
         run: |
-          xmllint --noout meo.sanitized.xml
+          xmllint --noout xmltv.xml
 
       - name: Commit sanitized XML
         uses: stefanzweifel/git-auto-commit-action@v5
