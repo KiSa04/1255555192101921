@@ -480,12 +480,16 @@ sub get_programmes {
 	my $req = HTTP::Request->new(
 	    GET => $url,
 	    [
-	        'User-Agent'      => 'Mozilla/5.0 (X11; Linux x86_64)',
-	        'Accept'          => '*/*',
-	        'Accept-Language' => 'pt-PT,pt;q=0.8,en;q=0.5',
-	        'Origin'          => 'https://www.meo.pt',
-	        'Referer'         => 'https://www.meo.pt/',
-			'Cookie'		  => 'UqZBpD3n3iPIDwJU9DmYiWmUQf4W9ZRPPtjUq5LGpgmWAx3WM7WKvw__'
+            'User-Agent'            => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0',
+            'Accept'                => '*/*',
+            'Accept-Language'       => 'pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3',
+            'Accept-Encoding'       => 'gzip, deflate, br, zstd',
+            'Referer'               => 'https://www.meo.pt/',
+            'Origin'                => 'https://www.meo.pt',
+            'Connection'            => 'keep-alive',
+            'Sec-Fetch-Dest'        => 'empty',
+            'Sec-Fetch-Mode'        => 'cors',
+            'Sec-Fetch-Site'        => 'same-site'
 	    ]
 	);
     my $ua = LWP::UserAgent->new;
