@@ -23,22 +23,18 @@ jobs:
             -o meo.raw.xml \
             https://raw.githubusercontent.com/moonlightz/meo-epg/refs/heads/master/meo.xml
 
-      - name: Sanitize XML (HTML + ampersands)
+      - name: Sanitize XML (HTML + entities)
         run: |
-          sed -E '
-            # 1. remove invalid HTML line breaks
-            s/<br[[:space:]]*\/?>/ /gi;
+          perl -0777 -pe '
+            # Remove invalid HTML line breaks
+            s/<br\s*\/?>/ /gi;
             s/<\/br>/ /gi;
       
-            # 2. fix broken entities like "& amp;"
-            s/&[[:space:]]+amp;/\&amp;/gi;
-            s/&[[:space:]]+lt;/\&lt;/gi;
-            s/&[[:space:]]+gt;/\&gt;/gi;
-            s/&[[:space:]]+quot;/\&quot;/gi;
-            s/&[[:space:]]+apos;/\&apos;/gi;
+            # Normalize broken entities like "& amp;"
+            s/&\s+(amp|lt|gt|quot|apos);/&$1;/gi;
       
-            # 3. escape remaining bare ampersands
-            s/&([^a-zA-Z#])/&amp;\1/g;
+            # Escape bare ampersands (NOT followed by a valid entity)
+            s/&(?!(?:amp|lt|gt|quot|apos|#\d+);)/&amp;/g;
           ' meo.raw.xml > xmltv.xml
           
       - name: Install xmllint
