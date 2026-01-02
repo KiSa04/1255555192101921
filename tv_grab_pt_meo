@@ -510,6 +510,10 @@ sub get_programmes {
 	my $programmes = {};
 
 
+	use DateTime;
+	use DateTime::Format::ISO8601;
+
+
 	next unless $data && ref($data) eq 'HASH' && $data->{Result} && ref($data->{Result}) eq 'ARRAY';
 	
 
