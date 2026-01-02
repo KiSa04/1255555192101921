@@ -340,6 +340,19 @@ foreach my $ch_did (@channels) {
     $writer->write_channel($channel);
 }
 
+
+
+# time limits for grab
+my $today_date = DateTime->today(time_zone => 'Europe/Lisbon');
+my $grab_start = $today_date->epoch() + ($opt_offset * 86400);
+my $grab_stop  = $grab_start + ($opt_days * 86400);
+print STDERR "\n start/end grab: $grab_start $grab_stop \n" if $opt_debug;
+
+my $dt_start = DateTime->from_epoch( epoch => $grab_start );
+my $dt_stop  = DateTime->from_epoch( epoch => $grab_stop );
+
+
+
 my $some=0;
 foreach my $ch_did (@channels) {
 	next unless $channels{$ch_did} || $channellabels{$ch_did};
