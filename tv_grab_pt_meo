@@ -109,6 +109,9 @@ use XMLTV::Get_nice 0.005067;
 use XMLTV::Mode;
 use XMLTV::Capabilities qw/baseline manualconfig cache/;
 use XMLTV::Description 'Portugal';
+use URI;                       
+use URI::Escape qw(uri_escape);
+
 
 use XMLTV::Usage <<END;
 $0: get Portuguese television listings in XMLTV format
@@ -502,11 +505,6 @@ sub get_programmes {
 
 	my $programmes = {};
 
-	use Data::Dumper;
-	
-	print STDERR "Raw response for $ch_meo_id:\n";
-	print STDERR Dumper($data);
-
 	foreach my $ch (@{ $data->{Result} }) {
 	
 	    next unless $ch->{CallLetter} eq $ch_meo_id;
@@ -557,83 +555,59 @@ sub get_programmes {
 			#print STDERR " UID= $p_id \n" if $opt_debug && !$debug_url_done; $debug_url_done=1;
     			#t $p_id;
 
-    			my $url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramDetails';
-    			#print STDERR " URL= $url \n" if $opt_debug && !$debug_url_done; $debug_url_done=1;
-    			t $url;
-
-    			# Build the request content
-    			my $content = '{ "service":"programdetail", "programID":"' . $p_id . '", "accountID":"" }';
-    #print STDERR " BODY= $content \n" if $opt_debug;
-    #t $content;
-
-    # Set up the cookies (similar to the PowerShell script)
-    			my $cookies = 'PtInfo=eyJVc2VyTmFtZSI6Ikpvc8OpIiwiTmF2SWQiOiJPcGItMUE3UjhFRGx0cDljbFdXcXpFQmM0Vm4zSmdLS3Q5WTFfNnowWTJnIiwiSWRQSUQiOiJQVENMSUVOVEUiLCJBbGlhcyI6ImRhbmllbG1lbmRlczAwNEBnbWFpbC5jb20ifQ==;
-                   byside_webcare_tuid=zhbxtnfixzzlqiakpk7lwy1gxzsorpwzhdjudyyzvuhpcvl9th;
-                   MEOAuthCampaign=1;
-                   UqZBpD3n3iPIDwJU9DmYiWmUQf4W9ZRPPtjUq5LGpgmWAx3WM7WKvw__=v1l5o8g++Cqfo';
-
-    # Prepare the HTTP request
-    			my $req = HTTP::Request->new(POST => $url,
-        			[
-            			'User-Agent'         => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0',
-            			'Accept'             => '*/*',
-            			'Accept-Language'    => 'pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3',
-            			'Accept-Encoding'    => 'gzip, deflate, br, zstd',
-            			'Referer'            => 'https://www.meo.pt/',
-            			'Content-Type'       => 'application/json; charset=utf-8',
-            			'Origin'             => 'https://www.meo.pt',
-            			'Connection'         => 'keep-alive',
-            			'Cookie'             => $cookies,
-            			'Sec-Fetch-Dest'     => 'empty',
-            			'Sec-Fetch-Mode'     => 'cors',
-            			'Sec-Fetch-Site'     => 'same-site',
-            			'Priority'           => 'u=0'
-        			],
-        			$content
-    			);
-
-    			my $ua = LWP::UserAgent->new;
-    # Send the HTTP request
-    			my $response = $ua->request($req);
-
-    # Decode the JSON response
-    				my $data = decode_json($response->decoded_content);
+    			my $base_url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTv.svc/GetProgramInfo';
+    			my $url = URI->new($p_id);
+				$url->query_form(
+				    callLetter => $ch_meo_id,                          # Channel Id
+				    userAgent  => 'IPTV_OFR_GTV',
+				);
+				
+				my $req = HTTP::Request->new(
+				    GET => $url,
+				    [
+			            'User-Agent'            => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0',
+			            'Accept'                => '*/*',
+			            'Accept-Language'       => 'pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3',
+			            'Accept-Encoding'       => 'gzip, deflate, br, zstd',
+			            'Referer'               => 'https://www.meo.pt/',
+			            'Origin'                => 'https://www.meo.pt',
+			            'Connection'            => 'keep-alive',
+			            'Sec-Fetch-Dest'        => 'empty',
+			            'Sec-Fetch-Mode'        => 'cors',
+			            'Sec-Fetch-Site'        => 'same-site'
+				    ]
+				);
+			    my $ua = LWP::UserAgent->new;
+			    # Send the HTTP request
+			    my $response = $ua->request($req);
+			    my $data = decode_json($response->decoded_content);
 				#print STDERR "Response Content: $data\n" if $opt_debug;
 				t $data;
 				my $prog_name = '';
 				my $channel_sigla = '';
 				#print STDERR Dumper($data) if $opt_debug;
-				if ( defined $data->{d} ) {
-
-					$p_desc	= $data->{d}->{'description'};
-										
-					if (defined $data->{d}->{'progName'}) {
-    						$prog_name = $data->{d}->{'progName'};
-						$prog_name =~ s/ /%20/g;
-					} else {
-    					        print STDERR "progName is missing\n" if $opt_debug;
-						t "progName is missing\n";
-					}
-
-					if (defined $data->{d}->{'channelSigla'}) {
-    						$channel_sigla = $data->{d}->{'channelSigla'};
-					} else {
-    						print STDERR "channelSigla is missing\n" if $opt_debug;
-					}
-
-					#print STDERR " BODY= $prog_name \n" if $opt_debug;
-    					t $prog_name;
-
-					    #print STDERR " https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=$prog_name&chCallLetter=$channel_sigla&profile=16_9&width=1080 \n" if $opt_debug && !$debug_url_done; $debug_url_done=1;
-    
-				            $p_image = "https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=$prog_name&chCallLetter=$channel_sigla&profile=16_9&width=1080";
-					    $p_image =~ s/&amp;/&/g;
-
-					# is there a movie rating?
-					(my $match, $p_rating) = $p_desc =~ /(\sClassifica..o et.ria: (.*?)\.$)/;		# actually "Classificação etária"
-					$p_desc =~ s/$match//  if ($p_rating);
-
+				if ( defined $data->{Result} ) {
+				
+				    $p_desc = $data->{Result}->{'Synopsis'} // '';
+				
+				    my $prog_name = $data->{Result}->{'Title'} // '';
+				    $prog_name =~ s/ /%20/g;
+				
+				    my $channel_sigla = $data->{Result}->{'CallLetter'} // '';
+				
+				    $p_image = "https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=$prog_name&chCallLetter=$channel_sigla&profile=16_9&width=1080";
+				    $p_image =~ s/&amp;/&/g;
+				
+				    # Extract rating if present
+				    (my $match, $p_rating) = $p_desc =~ /(\sClassifica..o et.ria: (.*?)\.$)/;
+				    $p_desc =~ s/$match// if $p_rating;
+				
+				    # Debug
+				    print STDERR "progName = $prog_name\n" if $opt_debug;
+				    print STDERR "channelSigla = $channel_sigla\n" if $opt_debug;
+				    print STDERR "Image URL = $p_image\n" if $opt_debug;
 				}
+
 				#print STDERR "Image URL= https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=$prog_name&chCallLetter=$channel_sigla&profile=16_9&width=230 \n" if $opt_debug;
 				#t $prog_name;
 				#t $channel_sigla;
