@@ -502,6 +502,11 @@ sub get_programmes {
 
 	my $programmes = {};
 
+	use Data::Dumper;
+	
+	print STDERR "Raw response for $ch_meo_id:\n";
+	print STDERR Dumper($data);
+
 	foreach my $ch (@{ $data->{Result} }) {
 	
 	    next unless $ch->{CallLetter} eq $ch_meo_id;
