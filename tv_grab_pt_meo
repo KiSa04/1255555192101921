@@ -521,7 +521,7 @@ sub get_programmes {
 			
 			my ( $p_id, $p_category, $p_title, $p_desc, $p_image, $p_duration, $p_year, $p_start, $p_stop, $p_start_epoch, $p_stop_epoch, $p_episode_num, $p_rating );
 	
-	        $p_id    = $prog->{ProgramId};
+	        $p_id    = $prog->{Id};
 	        $p_title = $prog->{Title};
 	
 	        my $start = DateTime::Format::ISO8601->parse_datetime($prog->{StartDate});
