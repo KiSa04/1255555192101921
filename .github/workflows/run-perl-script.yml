@@ -30,7 +30,7 @@ jobs:
 
     - name: Run Perl Script
       run: |
-        perl ./tv_grab_pt_meo --config-file ./tv_grab_pt_meo.conf --output listings.xml
+        perl ./tv_grab_pt_meo --config-file ./tv_grab_pt_meo.conf --output listings.xml --debug
 
     - name: Commit and push the output file
       run: |
