@@ -509,9 +509,8 @@ sub get_programmes {
 
 	my $programmes = {};
 
-	foreach my $ch (@{ $data->{Result} }) {
-	
-	    next unless $ch->{CallLetter} eq $ch_meo_id;
+
+	next unless $data && ref($data) eq 'HASH' && $data->{Result} && ref($data->{Result}) eq 'ARRAY';
 	
 	    foreach my $prog (@{ $ch->{Programs} }) {
 			
@@ -672,7 +671,6 @@ sub get_programmes {
 			push @{ $programmes->{ $ch_xmltv_id }->{ $p_start_epoch } }, \%prog;
 
 		} # end each prog
-	} # programs-container
 
 
 	# did we get any programmes?
