@@ -20,24 +20,31 @@ jobs:
         run: |
           curl -L \
             -A "Mozilla/5.0" \
-            -o meo.xml \
+            -o meo.raw.xml \
             https://raw.githubusercontent.com/moonlightz/meo-epg/refs/heads/master/meo.xml
 
-      - name: Sanitize XML (remove invalid HTML)
+      - name: Sanitize XML (HTML + ampersands)
         run: |
           sed -E '
+            # remove invalid HTML line breaks
             s/<br[[:space:]]*\/?>/ /gi;
             s/<\/br>/ /gi;
-          ' meo.xml > meo.sanitized.xml
 
-      - name: Validate XML
+            # escape bare ampersands (not part of entities)
+            s/&([^a-zA-Z#])/&amp;\1/g;
+          ' meo.raw.xml > meo.sanitized.xml
+
+      - name: Install xmllint
         run: |
           sudo apt-get update
           sudo apt-get install -y libxml2-utils
+
+      - name: Validate XML
+        run: |
           xmllint --noout meo.sanitized.xml
 
       - name: Commit sanitized XML
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Sanitize EPG XML (remove invalid HTML)"
-          file_pattern: meo.sanitized.xml
+          commit_message: "Sanitize EPG XML (HTML + unescaped ampersands)"
+          file_pattern: xmltv.xml
