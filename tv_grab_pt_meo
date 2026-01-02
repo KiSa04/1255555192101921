@@ -467,41 +467,26 @@ sub get_programmes {
     $ch_meo_id = $channels{$channellabels{$ch_xmltv_id}->{'id'}}->{'callsign'}  if  $channel_format eq 'label';
     $ch_meo_id = toUTF8($ch_meo_id);
     print STDERR " CH= $ch_meo_id \n" if $opt_debug;
-
-    my $url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramsFromChannels';
-    #print STDERR " URL= $url \n" if $opt_debug;
-    #t $url;
-
-    my $content = '{ "service":"channelsguide", "channels":["' . $ch_meo_id . '"], "dateStart":"' . $dt_start->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "dateEnd":"' . $dt_stop->strftime('%Y-%m-%d') . 'T00:00:00.000Z", "accountID":"" }';
-    #print STDERR " B= $content \n" if $opt_debug;
-
-    t $content;
-
-    # Set up the cookies (like in the PowerShell script)
-    my $cookies = 'PtInfo=eyJVc2VyTmFtZSI6Ik5vTmFtZSIsIk5hdklkIjoiT3BiLTFBN1I4RURsdHA5Y2xXV3F6RUJjNFZuM0pnS0t0OVkxXzZ6MFkyZyIsIklkUElEIjoiUFRDTElFTlRFIiwiQWxpYXMiOiJub21haWxAZ21haWwuY29tIn0=; 
-                   byside_webcare_tuid=zhbxtnfixzzlqiakpk7lwy1gxzsorpwzhdjudyyzvuhpcvl9th; 
-                   MEOAuthCampaign=1; 
-                   UqZBpD3n3iPIDwJU9DmYiWmUQf4W9ZRPPtjUq5LGpgmWAx3WM7WKvw__=v1l5o8g++Cqfo';
-
-    # Prepare the HTTP request
-    my $req = HTTP::Request->new(POST => $url,
-        [
-            'User-Agent'         => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0',
-            'Accept'             => '*/*',
-            'Accept-Language'    => 'pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3',
-            'Accept-Encoding'    => 'gzip, deflate, br, zstd',
-            'Referer'            => 'https://www.meo.pt/',
-            'Content-Type'       => 'application/json; charset=utf-8',
-            'Origin'             => 'https://www.meo.pt',
-            'Connection'         => 'keep-alive',
-            'Cookie'             => $cookies,
-            'Sec-Fetch-Dest'     => 'empty',
-            'Sec-Fetch-Mode'     => 'cors',
-            'Sec-Fetch-Site'     => 'same-site'
-        ],
-        $content
-    );
-
+	
+	my $base_url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTv.svc/GetLiveChannelProgramsByDate';
+	
+	my $uri = URI->new($base_url);
+	$uri->query_form(
+	    callLetter => $ch_meo_id,                          # RTP1
+	    date       => $dt_start->strftime('%Y-%m-%d'),     # 2026-01-02
+	    userAgent  => 'IPTV_OFR_GTV',
+	);
+	
+	my $req = HTTP::Request->new(
+	    GET => $uri,
+	    [
+	        'User-Agent'      => 'Mozilla/5.0 (X11; Linux x86_64)',
+	        'Accept'          => '*/*',
+	        'Accept-Language' => 'pt-PT,pt;q=0.8,en;q=0.5',
+	        'Origin'          => 'https://www.meo.pt',
+	        'Referer'         => 'https://www.meo.pt/',
+	    ]
+	);
     my $ua = LWP::UserAgent->new;
     # Send the HTTP request
     my $response = $ua->request($req);
@@ -768,7 +753,7 @@ sub get_channels {
     my ( %channels, %channellabels );
 
     # Set up the URL and headers
-    my $url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTvMng.svc/getGridAnon';
+    my $url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTv.svc/GetContentsForChannels?userAgent=IPTV_OFR_GTV';
     print STDERR " URL= $url \n" if $opt_debug;
 
     my $content = '{"service":"allchannels"}';  # JSON payload
@@ -776,7 +761,7 @@ sub get_channels {
 
     # Set up the HTTP headers to mimic the curl request
     my $ua = LWP::UserAgent->new;
-    my $req = HTTP::Request->new( POST => $url,
+    my $req = HTTP::Request->new( GET => $url,
         [
             'User-Agent'            => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0',
             'Accept'                => '*/*',
