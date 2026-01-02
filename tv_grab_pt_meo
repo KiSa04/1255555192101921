@@ -512,7 +512,8 @@ sub get_programmes {
 
 	next unless $data && ref($data) eq 'HASH' && $data->{Result} && ref($data->{Result}) eq 'ARRAY';
 	
-	    foreach my $prog (@{ $ch->{Programs} }) {
+
+	foreach my $prog (@{ $data->{Result} }) {
 			
 			my ( $p_id, $p_category, $p_title, $p_desc, $p_image, $p_duration, $p_year, $p_start, $p_stop, $p_start_epoch, $p_stop_epoch, $p_episode_num, $p_rating );
 	
