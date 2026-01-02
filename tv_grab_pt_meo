@@ -503,6 +503,8 @@ sub get_programmes {
 	    next unless $ch->{CallLetter} eq $ch_meo_id;
 	
 	    foreach my $prog (@{ $ch->{Programs} }) {
+			
+			my ( $p_id, $p_category, $p_title, $p_desc, $p_image, $p_duration, $p_year, $p_start, $p_stop, $p_start_epoch, $p_stop_epoch, $p_episode_num, $p_rating );
 	
 	        $p_id    = $prog->{UniqueId};
 	        $p_title = $prog->{Title};
