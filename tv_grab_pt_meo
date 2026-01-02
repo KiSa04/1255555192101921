@@ -754,10 +754,6 @@ sub get_channels {
 
     # Set up the URL and headers
     my $url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTv.svc/GetContentsForChannels?userAgent=IPTV_OFR_GTV';
-    print STDERR " URL= $url \n" if $opt_debug;
-
-    my $content = '{"service":"allchannels"}';  # JSON payload
-    print STDERR " BODY= $content \n" if $opt_debug;
 
     # Set up the HTTP headers to mimic the curl request
     my $ua = LWP::UserAgent->new;
@@ -768,16 +764,13 @@ sub get_channels {
             'Accept-Language'       => 'pt-PT,pt;q=0.8,en;q=0.5,en-US;q=0.3',
             'Accept-Encoding'       => 'gzip, deflate, br, zstd',
             'Referer'               => 'https://www.meo.pt/',
-            'Content-Type'          => 'application/json; charset=utf-8',
             'Origin'                => 'https://www.meo.pt',
             'Connection'            => 'keep-alive',
-            'Cookie'                => 'UqZBpD3n3iPIDwJU9DmYiWmUQf4W9ZRPPtjUq5LGpgmWAx3WM7WKvw__=v1kZo8g++Cdpd; byside_webcare_tuid=5yez6vvt90nmq2yyc517bfmx8b91z9d0ptqaalj668h5plvi1q',
             'Sec-Fetch-Dest'        => 'empty',
             'Sec-Fetch-Mode'        => 'cors',
             'Sec-Fetch-Site'        => 'same-site'
-        ],
-        $content
-    );
+        ]
+	);
 
     # Send the HTTP request
     my $response = $ua->request($req);
@@ -785,34 +778,35 @@ sub get_channels {
     if ($response->is_success) {
         my $data = decode_json($response->decoded_content);  # Decode JSON response
 
-        foreach (@{ $data->{d}->{channels} }) {
+		foreach my $ch (@{ $data->{Result} }) {
+		
+		    my ($channel_id, $channel_number, $channel_name, $channel_logo);
+		
+		    $channel_id     = $ch->{CallLetter};        # RTP1
+		    $channel_number = $ch->{ChannelPosition};   # 1
+		    $channel_name   = $ch->{Title};
+		    $channel_logo   = undef;                    # not provided by this API
+		
+		    my $channel_id_clean = clean_utf8( trim_all($channel_id) );
+		    next unless defined $channel_id_clean && $channel_id_clean ne '';
+		
+		    my $channel = {
+		        'channel-name'         => toUTF8($channel_name),
+		        'display-name'         => [ [ toUTF8($channel_name), $LANG ] ],
+		        'id'                   => $channel_number,
+		        'callsign'             => $channel_id,
+		        'id_by_label'          => $channel_id_clean . '.' . $DOMAIN,
+		        'id_by_number'         => $channel_number . '.' . $DOMAIN,
+		        'debug-channel-number' => $channel_number,
+		    };
+		
+		    # Optional logo if you later add it
+		    $channel->{icon} = [ { src => $channel_logo } ] if $channel_logo;
+		
+		    $channels{$channel_number} = $channel;
+		    $channellabels{$channel_id_clean} = { id => $channel_number };
+		    push @ch_all, $channel;
 
-            my ($channel_id, $channel_number, $channel_name, $channel_logo);
-
-            $channel_id     = $_->{sigla};
-            $channel_number = $_->{id};
-            $channel_name   = $_->{name};
-            $channel_logo   = $_->{logo};
-
-            my $channel_id_clean = $channel_id;
-            $channel_id_clean = clean_utf8(trim_all($channel_id_clean));   # Clean the channel ID
-
-            # Store the channel information
-            if (defined $channel_id_clean && $channel_id_clean ne '') {
-                my $ch = {
-                    'channel-name'         => toUTF8($channel_name),
-                    'display-name'         => [ [ toUTF8($channel_name), $LANG ] ],
-                    'icon'                 => [ { 'src' => $channel_logo } ],
-                    'id'                   => $channel_number,
-                    'callsign'             => $channel_id,
-                    'id_by_label'          => $channel_id_clean . '.' . $DOMAIN,
-                    'id_by_number'         => $channel_number . '.' . $DOMAIN,
-                    'debug-channel-number' => $channel_number,
-                };
-                $channels{$channel_number} = $ch;
-                $channellabels{$channel_id_clean} = { 'id' => $channel_number };
-                push @ch_all, $ch;
-            }
         }
 
         # Handle case where no channels are found
