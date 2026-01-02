@@ -501,6 +501,10 @@ sub get_programmes {
     my $data = decode_json($response->decoded_content);
 	#print STDERR Dumper($data);die();
 
+	t "URL: $url";
+	t "Response Status: " . $response->status_line;
+	t "Response Content: " . $response->decoded_content;
+
 	my $debug_url_done=0;	# for debug
 
 	my $programmes = {};
@@ -583,6 +587,9 @@ sub get_programmes {
 			    my $response = $ua->request($req);
 			    my $data = decode_json($response->decoded_content);
 				#print STDERR "Response Content: $data\n" if $opt_debug;
+				t "URL: $url";
+				t "Response Status: " . $response->status_line;
+				t "Response Content: " . $response->decoded_content;
 				t $data;
 				my $prog_name = '';
 				my $channel_sigla = '';
