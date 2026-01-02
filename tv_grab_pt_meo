@@ -468,7 +468,7 @@ sub get_programmes {
     $ch_meo_id = toUTF8($ch_meo_id);
     print STDERR " CH= $ch_meo_id \n" if $opt_debug;
 
-    my $url = 'https://authservice.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramsFromChannels';
+    my $url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramsFromChannels';
     #print STDERR " URL= $url \n" if $opt_debug;
     #t $url;
 
@@ -575,7 +575,7 @@ sub get_programmes {
 			#print STDERR " UID= $p_id \n" if $opt_debug && !$debug_url_done; $debug_url_done=1;
     			#t $p_id;
 
-    			my $url = 'https://authservice.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramDetails';
+    			my $url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTvMng.svc/getProgramDetails';
     			#print STDERR " URL= $url \n" if $opt_debug && !$debug_url_done; $debug_url_done=1;
     			t $url;
 
@@ -768,7 +768,7 @@ sub get_channels {
     my ( %channels, %channellabels );
 
     # Set up the URL and headers
-    my $url = 'https://authservice.apps.meo.pt/Services/GridTv/GridTvMng.svc/getGridAnon';
+    my $url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTvMng.svc/getGridAnon';
     print STDERR " URL= $url \n" if $opt_debug;
 
     my $content = '{"service":"allchannels"}';  # JSON payload
