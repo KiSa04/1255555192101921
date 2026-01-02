@@ -557,9 +557,9 @@ sub get_programmes {
     			#t $p_id;
 
     			my $base_url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTv.svc/GetProgramInfo';
-    			my $url = URI->new($p_id);
+    			my $url = URI->new($base_url);
 				$url->query_form(
-				    callLetter => $ch_meo_id,                          # Channel Id
+				    callLetter => $p_id,                          # Channel Id
 				    userAgent  => 'IPTV_OFR_GTV',
 				);
 				
