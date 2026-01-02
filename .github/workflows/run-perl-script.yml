@@ -16,12 +16,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download EPG XML
+      - name: Download compressed EPG XML (MEO OHA)
         run: |
           curl -L \
             -A "Mozilla/5.0" \
-            -o meo.raw.xml \
-            https://raw.githubusercontent.com/moonlightz/meo-epg/refs/heads/master/meo.xml
+            -o meo.raw.xml.gz \
+            https://raw.githubusercontent.com/moonlightz/meo-epg/refs/heads/master/meo_oha.xml.gz
+
+      - name: Decompress XML
+        run: |
+          gunzip -c meo.raw.xml.gz > meo.raw.xml
 
       - name: Sanitize XML (HTML + entities)
         run: |
