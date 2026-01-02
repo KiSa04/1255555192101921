@@ -485,6 +485,7 @@ sub get_programmes {
 	        'Accept-Language' => 'pt-PT,pt;q=0.8,en;q=0.5',
 	        'Origin'          => 'https://www.meo.pt',
 	        'Referer'         => 'https://www.meo.pt/',
+			'Cookie'		  => 'UqZBpD3n3iPIDwJU9DmYiWmUQf4W9ZRPPtjUq5LGpgmWAx3WM7WKvw__'
 	    ]
 	);
     my $ua = LWP::UserAgent->new;
