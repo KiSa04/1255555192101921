@@ -546,13 +546,14 @@ sub get_programmes {
 			$p_title =~ s/$p_match//  if $p_match;
 			trim $p_title;
 
+			print STDERR " Titulo= $p_title \n" if $opt_debug;
 
 			# get programme description from the programme page unless the user says no
 			if (!$opt_fast) {
 
 				
     			# get programme description from the programme page unless the user says no
-			#print STDERR " UID= $p_id \n" if $opt_debug && !$debug_url_done; $debug_url_done=1;
+				#print STDERR " UID= $p_id \n" if $opt_debug && !$debug_url_done; $debug_url_done=1;
     			#t $p_id;
 
     			my $base_url = 'https://meogouser.apps.meo.pt/Services/GridTv/GridTv.svc/GetProgramInfo';
@@ -592,7 +593,8 @@ sub get_programmes {
 				
 				    my $prog_name = $data->{Result}->{'Title'} // '';
 				    $prog_name =~ s/ /%20/g;
-				
+
+					print STDERR " Descricao= $p_desc \n" if $opt_debug;
 				    my $channel_sigla = $data->{Result}->{'CallLetter'} // '';
 				
 				    $p_image = "https://proxycache.online.meo.pt/eemstb/ImageHandler.ashx?evTitle=$prog_name&chCallLetter=$channel_sigla&profile=16_9&width=1080";
