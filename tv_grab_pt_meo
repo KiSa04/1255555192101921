@@ -498,44 +498,29 @@ sub get_programmes {
 
 	my $programmes = {};
 
-	foreach my $ch (@{ $data->{d}->{channels} }) {
-
-		if (toUTF8($ch->{sigla}) ne $ch_meo_id) {
-			print STDERR "ERROR: unexpected channel- wanted $ch_meo_id got ".toUTF8($ch->{sigla})." \n"; next;
-		}
-
-		foreach my $prog (@{ $ch->{programs} }) {
-
-			my ( $p_id, $p_category, $p_title, $p_desc, $p_image, $p_duration, $p_year, $p_start, $p_stop, $p_start_epoch, $p_stop_epoch, $p_episode_num, $p_rating );
-
-			$p_id		= $prog->{'uniqueId'};
-			$p_category	= '';	# not seen in the data
-			$p_year		= '';	# not seen in the data
-			$p_title	= $prog->{'name'};
-			$p_desc		= '';	# needs 'details' page
-			$p_image	= '';	# needs 'details' page
-			$p_rating	= '';	# needs 'details' page
-
-
-			# get prog times
-			my ($d,$m,$y) = $prog->{date} =~ /^(\d+)-(\d+)-(\d\d\d\d)$/;
-			my ($h1,$i1) = $prog->{timeIni} =~ /^(\d+):(\d+)$/;
-			my $start = DateTime->new( year=>$y, month=>$m, day=>$d, hour=>$h1, minute=>$i1, second=>0, time_zone=>'Europe/Lisbon' );
-
-			my ($h2,$i2) = $prog->{timeEnd} =~ /^(\d+):(\d+)$/;
-			my $stop = $start->clone();
-			$stop->set( hour=>$h2, minute=>$i2 );
-
-			# if 'stop' is before 'start' then assume 'end' is the following day
-			if ($stop->epoch() < $start->epoch()) {
-				$stop->add( days=>1 );
-			}
-
-			$p_start 		= $start->strftime("%Y%m%d%H%M%S %z");
-			$p_stop  		= $stop->strftime("%Y%m%d%H%M%S %z");
-			$p_start_epoch 	= $start->epoch();
-			$p_stop_epoch  	= $stop->epoch();
-			$p_duration  	= $stop->epoch() - $start->epoch();		# seconds
+	foreach my $ch (@{ $data->{Result} }) {
+	
+	    next unless $ch->{CallLetter} eq $ch_meo_id;
+	
+	    foreach my $prog (@{ $ch->{Programs} }) {
+	
+	        $p_id    = $prog->{UniqueId};
+	        $p_title = $prog->{Title};
+	
+	        my $start = DateTime::Format::ISO8601->parse_datetime($prog->{StartDate});
+	        my $stop  = DateTime::Format::ISO8601->parse_datetime($prog->{EndDate});
+	
+	        $start->set_time_zone('Europe/Lisbon');
+	        $stop->set_time_zone('Europe/Lisbon');
+	
+	        $p_start_epoch = $start->epoch;
+	        $p_stop_epoch  = $stop->epoch;
+	
+	        next if $p_start_epoch < $grab_start || $p_start_epoch >= $grab_stop;
+	
+	        $p_start = $start->strftime("%Y%m%d%H%M%S %z");
+	        $p_stop  = $stop->strftime("%Y%m%d%H%M%S %z");
+	        $p_duration = $p_stop_epoch - $p_start_epoch;
 
 
 			# is programme within requetsted range?
