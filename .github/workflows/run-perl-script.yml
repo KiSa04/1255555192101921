@@ -1,4 +1,4 @@
-name: Run Perl Script Daily
+name: Sanitize MEO EPG XML
 
 on:
   push:
@@ -9,36 +9,49 @@ on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  run-perl-script:
-    runs-on: ubuntu-latest  # Runs on a GitHub-hosted Ubuntu runner
+  sanitize:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Install Perl and Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y perl cpanminus make  # Install Perl, cpanminus, and make
+      - name: Download compressed EPG XML (MEO OHA)
+        run: |
+          curl -L \
+            -A "Mozilla/5.0" \
+            -o meo.raw.xml.gz \
+            https://raw.githubusercontent.com/moonlightz/meo-epg/refs/heads/master/meo_oha.xml.gz
 
-    - name: Install Perl and Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y perl
-        sudo apt-get install -y libjson-perl
-        sudo apt-get install -y xmltv
+      - name: Decompress XML
+        run: |
+          gunzip -c meo.raw.xml.gz > meo.raw.xml
 
-    - name: Run Perl Script
-      run: |
-        perl ./tv_grab_pt_meo --config-file ./tv_grab_pt_meo.conf --output listings.xml --debug
+      - name: Sanitize XML (HTML + entities)
+        run: |
+          perl -0777 -pe '
+            # Remove invalid HTML line breaks
+            s/<br\s*\/?>/ /gi;
+            s/<\/br>/ /gi;
+      
+            # Normalize broken entities like "& amp;"
+            s/&\s+(amp|lt|gt|quot|apos);/&$1;/gi;
+      
+            # Escape bare ampersands (NOT followed by a valid entity)
+            s/&(?!(?:amp|lt|gt|quot|apos|#\d+);)/&amp;/g;
+          ' meo.raw.xml > xmltv.xml
+          
+      - name: Install xmllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
 
-    - name: Commit and push the output file
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git add listings.xml  # Make sure the file is created in the Perl script
-        git commit -m "Add daily output file"
-        git pull --rebase origin main  # Fetch latest changes to avoid conflicts
-        git push https://github.com/KiSa04/1255555192101921.git main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # GitHub provides this automatically for authentication
+      - name: Validate XML
+        run: |
+          xmllint --noout xmltv.xml
+
+      - name: Commit sanitized XML
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Sanitize EPG XML (HTML + unescaped ampersands)"
+          file_pattern: xmltv.xml
