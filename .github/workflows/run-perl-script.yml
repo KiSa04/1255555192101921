@@ -26,6 +26,12 @@ jobs:
       - name: Decompress XML
         run: |
           gunzip -c meo.raw.xml.gz > meo.raw.xml
+          iconv -f ISO-8859-1 -t UTF-8 \
+            meo.tmp.xml \
+            -o meo.raw.xml || \
+          iconv -f WINDOWS-1252 -t UTF-8 \
+            meo.tmp.xml \
+            -o meo.raw.xml
 
       - name: Sanitize XML (HTML + entities)
         run: |
